@@ -40,3 +40,8 @@ if 'hello' in query:
 
 else:
     speak("Sorry, No command found")
+    
+    
+    
+ if joihrouhuorhouevh   
+    
