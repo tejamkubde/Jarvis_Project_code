@@ -30,18 +30,13 @@ def takecommand():
         
         return query.lower()
                 
-# speak('Hello sir')
+speak('Hello sir')
 # takecommand()
 
 query = takecommand()
-   
+
 if 'hello' in query:
-    speak("Hello Sir Good evening")
+    speak("Good Morning Sir")
 
 else:
-    speak("Sorry, No command found")
-    
-    
-    
- if joihrouhuorhouevh   
-    
+    speak("Sorry, No command found") 
