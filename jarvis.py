@@ -10,7 +10,8 @@ Assistant.setProperty('voices',voices[1].id)
 def speak(audio):
     print("     ")
     Assistant.say(audio)
-    print("     ")
+
+    print(f":{audio}")
     Assistant.runAndWait()
     
 def takecommand():
@@ -30,13 +31,30 @@ def takecommand():
         
         return query.lower()
                 
-speak('Hello sir')
-# takecommand()
 
-query = takecommand()
+def TaskExe():
 
-if 'hello' in query:
-    speak("Good Morning Sir")
+    while True:
+        query=takecommand()
+        if "hello" in query:
+            speak("hello sir i am jarvis")
+            speak("your personal assistant")
+            speak("How may i help you?")
 
-else:
-    speak("Sorry, No command found") 
+        elif "how are you" in query:
+            speak("I am fine sir")
+            speak("what about you")
+
+        elif "you need a break" in query:
+            speak("ok sir")
+            speak("you can call me anytime")
+            break
+
+        elif "bye" in query:
+            speak("bye sir")
+            speak("have a good day")
+
+        
+
+
+TaskExe()
