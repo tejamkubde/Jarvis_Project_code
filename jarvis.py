@@ -5,7 +5,7 @@ import speech_recognition as sr
 
 Assistant = pyttsx3.init('sapi5')
 voices = Assistant.getProperty('voices')
-Assistant.setProperty('voices',voices[0].id)
+Assistant.setProperty('voices',voices[1].id)
 
 def speak(audio):
     print("     ")
@@ -30,15 +30,18 @@ def takecommand():
         
         return query.lower()
                 
-speak('Hello sir')
+# speak('Hello sir')
 # takecommand()
 
 query = takecommand()
-
+   
 if 'hello' in query:
-    speak("Good Morning Sir")
+    speak("Hello Sir Good evening")
 
 else:
+
     speak("Sorry, No command found") 
+
+    speak("Sorry, No command found")
     
-    stsystsv
+    if joihrouhuorhouevh   
