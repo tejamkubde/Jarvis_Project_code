@@ -34,10 +34,7 @@ def takecommand():
 # takecommand()
 
 query = takecommand()
-if 'pellow' in query:
-    speak("Hello Sir bad evening")
-    
-    
+   
 if 'hello' in query:
     speak("Hello Sir Good evening")
 
