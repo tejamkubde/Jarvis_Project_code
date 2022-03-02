@@ -39,9 +39,9 @@ if 'hello' in query:
     speak("Hello Sir Good evening")
 
 else:
+
+    speak("Sorry, No command found") 
+
     speak("Sorry, No command found")
     
-    
-    
- if joihrouhuorhouevh   
-    
+    if joihrouhuorhouevh   
