@@ -125,9 +125,9 @@ def TaskExe():
         prob1 = takecommand()
 
         if 'meaning' in prob1:
-            probl = probl.replace("what is the","")
-            probl = probl.replace("jarvis","")
-            probl = probl.replace("of","")
+            # probl = probl.replace("what is the","")
+            # probl = probl.replace("jarvis","")
+            # probl = probl.replace("of","")
             probl = probl.replace("meaning of","")
             result = diction.meaning(probl)
             speak(f'The Meaning For {probl} is {result}')
