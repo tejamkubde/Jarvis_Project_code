@@ -9,6 +9,7 @@ import os
 import wikipedia
 import pyautogui
 import keyboard
+from PyDictionary import PyDictionary as diction
 
 
 
@@ -44,6 +45,7 @@ def takecommand():
                 
 
 def TaskExe():
+
     def music():
         speak("Tell me the name of the song!")
         musicname = takecommand()
@@ -107,6 +109,31 @@ def TaskExe():
         elif 'history' in command:
             keyboard.press_and_release('ctrl + h')
 
+    def screenshot():
+        speak("Ok sir! What should i name that file? ")
+        path = takecommand()
+        path1name  = path + ".png"
+        path1 = "C:\\Users\\Ketan\\OneDrive\\Pictures\\Screenshots\\" +path1name
+        kk = pyautogui.screenshot()
+        kk.save(path1)
+        os.startfile("C:\\Users\\Ketan\\OneDrive\\Pictures\\Screenshots")
+        speak("Here is your screenshot")
+ 
+    def Dict():
+        speak('Dictionary Activated !!')
+        speak('Tell me the Word Sir...!')
+        prob1 = takecommand()
+
+        if 'meaning' in prob1:
+            probl = probl.replace("what is the","")
+            probl = probl.replace("jarvis","")
+            probl = probl.replace("of","")
+            probl = probl.replace("meaning of","")
+            result = diction.meaning(probl)
+            speak(f'The Meaning For {probl} is {result}')
+        
+        else:
+            speak("tejam")
 
     def openApps():
         speak("Ok sir, Wait a second!")
@@ -141,19 +168,46 @@ def TaskExe():
         if "chrome" in query:
             os.system("TASKKILL /F /im chrome.exe")
 
-        elif "youtube" in query:
-            os.system("TASKKILL /F /im youtube.exe")
+        elif "brave" in query:
+            os.system("TASKKILL /F /im brave.exe")
 
         elif "code" in query:
             os.system("TASKKILL /F /im Code.exe")
 
-        elif "brave" in query:
-            os.system("TASKKILL /F /im brave.exe")
+        elif "whatsapp" in query:
+            os.system("TASKKILL /F /im WhatsApp.exe")
 
+    def YoutubeAuto():
 
+        speak("Whats your Command ?")
+        comm = takecommand()
+        
+        if 'pause' in comm:
+            keyboard.press('space bar')
+
+        elif 'restart' in comm:
+            keyboard.press('0')
+
+        elif 'mute' in comm:
+            keyboard.press('m')
+
+        elif 'skip' in comm:
+            keyboard.press('l')
+
+        elif 'back' in comm:
+            keyboard.press('j')
+
+        elif 'fullscreen' in comm:
+            keyboard.press('f')
+
+        elif 'film mode' in comm:
+            keyboard.press('t')
+
+        speak('Done Sir')
 
     while True:
         query=takecommand()
+
         if "hello" in query:
             speak("hello sir i am jarvis")
             speak("your personal assistant")
@@ -192,6 +246,7 @@ def TaskExe():
             speak("Ok sir, Launching")
             query = query.replace("website","")
             query = query.replace("jarvis","")
+            query = query.replace(" ","")
             web1 = query.replace("open","")
             web2 = "https://www." + web1 + ".com"
             webbrowser.open(web2)
@@ -217,9 +272,8 @@ def TaskExe():
             wiki=wikipedia.summary(query,2)
             speak(f"According to Wikipedia :{wiki}")
 
-        # elif "screenshot" in query:
-        #     kk = pyautogui.screenshot()
-        #     kk.save('D:\\')
+        elif "screenshot" in query:
+            screenshot()
 
         elif "open facebook" in query:
             openApps()
@@ -253,7 +307,45 @@ def TaskExe():
         elif "close chrome" in query:
             closeApps()
 
+        elif "close brave" in query:
+            closeApps()
+
+        elif "close whatsapp" in query:
+            closeApps()
+        
+        elif "close code" in query:
+            closeApps()
+
         elif "chrome automation" in query:
             ChromeAuto()
-            
+
+        elif 'pause' in query:
+            keyboard.press('space bar')
+
+        elif 'restart' in query:
+            keyboard.press('0')
+
+        elif 'mute' in query:
+            keyboard.press('m')
+
+        elif 'skip' in query:
+            keyboard.press('l')
+
+        elif 'back' in query:
+            keyboard.press('j')
+
+        elif 'full screen' in query:
+            keyboard.press('f')
+
+        elif 'film mode' in query:
+            keyboard.press('t')
+
+        elif 'pause' in query:
+            keyboard.press('k')
+
+        elif 'youtube tool' in query:
+            YoutubeAuto()
+
+        elif 'dictionary' in query:
+            Dict()
 TaskExe()
