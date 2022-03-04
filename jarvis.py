@@ -84,8 +84,8 @@ def TaskExe():
         elif "launch" in query:
             speak("Tell me the name of the website!")
             name = takecommand()
-            web = 'https://www.' + web + '.com'
-            webbrowser.open("https://www.google.com")
+            web = 'https://www.' + name + '.com'
+            webbrowser.open(web)
             speak("Done Sir!")
                 
 
