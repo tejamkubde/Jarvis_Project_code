@@ -3,6 +3,15 @@ import pyttsx3
 import webbrowser
 import speech_recognition as sr
 import pywhatkit
+import time
+import flask
+import os 
+import wikipedia
+import pyautogui
+import keyboard
+
+
+
 
 Assistant = pyttsx3.init('sapi5')
 voices = Assistant.getProperty('voices')
@@ -35,6 +44,113 @@ def takecommand():
                 
 
 def TaskExe():
+    def music():
+        speak("Tell me the name of the song!")
+        musicname = takecommand()
+        pywhatkit.playonyt(musicname)
+        speak("Your song has been started!, Enjoy sir")
+
+    def whatsapp():
+        speak("Tell me the name of the person")
+        name = takecommand()
+
+
+        if 'abc' in name:
+            speak("Tell me the message")
+            msg=takecommand()
+            speak("tell me the time sir")
+            speak("time in hour")
+            hour=int(takecommand())
+            speak("time in minutes")
+            min=int(takecommand())
+            pywhatkit.sendwhatmsg("+919307665461",msg,hour,min,20)
+            speak("ok sir, sending whatsapp message")
+
+        elif 'about' in name:
+            speak("Tell me the message")
+            msg=takecommand()
+            speak("tell me the time sir")
+            speak("time in hour")
+            hour=int(takecommand())
+            speak("time in minutes")
+            min=int(takecommand())
+            pywhatkit.sendwhatmsg("+919730863521",msg,hour,min,20)
+            speak("ok sir, sending whatsapp message")
+    
+        else:
+            speak("tell me the phone number")
+            phone=int(takecommand())
+            ph = "+91" + phone
+            speak("Tell me the message")
+            msg=takecommand()
+            speak("tell me the time sir")
+            speak("time in hour")
+            hour=int(takecommand())
+            speak("time in minutes")
+            min=int(takecommand())
+            pywhatkit.sendwhatmsg(ph,msg,hour,min,20)
+            speak("ok sir, sending whatsapp message")
+    
+    def ChromeAuto():
+        speak('Chrome Automation Started!!')
+        command = takecommand()
+
+        if 'close this tab' in command:
+            keyboard.press_and_release('ctrl + w')
+
+        elif 'open new tab' in command:
+            keyboard.press_and_release('ctrl + t')
+
+        elif 'open new window' in command:
+            keyboard.press_and_release('ctrl + n')
+
+        elif 'history' in command:
+            keyboard.press_and_release('ctrl + h')
+
+
+    def openApps():
+        speak("Ok sir, Wait a second!")
+
+        if "code" in query:
+            os.startfile("C:\\Users\\Ketan\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
+
+        elif "brave" in query:
+            os.startfile("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe")
+
+        elif "whatsapp" in query:
+            os.startfile("C:\\Users\\Ketan\\AppData\\Local\\WhatsApp\\WhatsApp.exe")
+        
+        elif "chrome" in query:
+            os.startfile("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe")
+
+        elif "facebook" in query:
+            webbrowser.open("https://www.facebook.com/")
+            
+        elif "youtube" in query:
+            webbrowser.open("https://www.youtube.com/")
+
+        elif "instagram" in query:
+            webbrowser.open("https://www.instagram.com/")
+
+        elif "maps" in query:
+            webbrowser.open("https://www.google.com/maps/@18.6793851,73.8536679,15z")
+
+    def closeApps():
+        speak("Ok sir!, Wait a second..")
+
+        if "chrome" in query:
+            os.system("TASKKILL /F /im chrome.exe")
+
+        elif "youtube" in query:
+            os.system("TASKKILL /F /im youtube.exe")
+
+        elif "code" in query:
+            os.system("TASKKILL /F /im Code.exe")
+
+        elif "brave" in query:
+            os.system("TASKKILL /F /im brave.exe")
+
+
 
     while True:
         query=takecommand()
@@ -88,6 +204,56 @@ def TaskExe():
             webbrowser.open(web)
             speak("Done Sir!")
                 
+        elif "whatsapp message" in query:
+            whatsapp()
 
+        elif "play song" in query:
+            music()
 
+        elif "wikipedia" in query:
+            speak("Searching wikipedia")
+            query=query.replace("jarvis","")
+            query=query.replace("wikipedia","")
+            wiki=wikipedia.summary(query,2)
+            speak(f"According to Wikipedia :{wiki}")
+
+        # elif "screenshot" in query:
+        #     kk = pyautogui.screenshot()
+        #     kk.save('D:\\')
+
+        elif "open facebook" in query:
+            openApps()
+
+        elif "open instagram" in query:
+            openApps()
+
+        elif "open code" in query:
+            openApps()
+
+        elif "open youtube" in query:
+            openApps()
+
+        elif "open brave" in query:
+            openApps()
+
+        elif "open chrome" in query:
+            openApps()
+
+        elif "open map" in query:
+            openApps()
+
+        elif "open whatsapp" in query:
+            openApps()
+
+        elif "repeat my words" in query:
+            speak("speak sir")
+            ab= takecommand()
+            speak(f"you said : {ab}")
+
+        elif "close chrome" in query:
+            closeApps()
+
+        elif "chrome automation" in query:
+            ChromeAuto()
+            
 TaskExe()
