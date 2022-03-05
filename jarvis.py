@@ -10,8 +10,12 @@ import wikipedia
 import pyautogui
 import keyboard
 from PyDictionary import PyDictionary as diction
-
-
+import pyjokes
+import datetime
+from playsound import playsound
+import requests
+from bs4 import BeautifulSoup
+from googletrans import Translator
 
 
 Assistant = pyttsx3.init('sapi5')
@@ -45,6 +49,60 @@ def takecommand():
                 
 
 def TaskExe():
+    speak("Hello, I am jarvis!")
+    speak("How can i help you? ")
+
+    def speedtest():
+        import speedtest
+        speak("Checking Speed")
+        speed = speedtest.Speedtest()
+        downloading = speed.download()
+        correctDown= int(downloading/800000)
+        uploading= speed.upload()
+        correctUpload=int(uploading/800000)
+
+        if 'uploading' in query:
+            speak(f"The uploading speed is {correctUpload} mbps")
+
+        elif 'downloading' in query:
+            speak(f"The downloading speed is {correctDown} mbps")
+
+
+        else:
+            speak(f"The downloading speed is {correctDown} mbp/s and uploading speed is {correctUpload} mbps")
+
+    def takeHindi():
+        command = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Listening.............")
+            command.pause_threshold = 1
+            audio = command.listen(source)
+       
+        try:
+            print("Recognizing............")
+            query = command.recognize_google(audio,language='en-in')
+            print(f'you said : {query}') 
+            
+        except:
+            return "none"
+        
+        return query.lower()
+
+    def Tran():
+        speak('Tell me the Line!')
+        line = takeHindi()
+        traslate = Translator()
+        result = traslate.translate(line)
+        Text = result.text 
+        speak(f"The Translation Of This Line Is:",Text)
+
+    def Temp():
+        search="temperature in pune"
+        url = f"https://www.google.com/search?q={search}"
+        r=requests.get(url)
+        data= BeautifulSoup(r.text,"html.parser")
+        temperature=data.find("div",class_="BNeawe").text
+        speak(f"the temperature outside is {temperature}")
 
     def music():
         speak("Tell me the name of the song!")
@@ -197,13 +255,15 @@ def TaskExe():
         elif 'back' in comm:
             keyboard.press('j')
 
-        elif 'fullscreen' in comm:
+        elif 'full screen' in comm:
             keyboard.press('f')
 
         elif 'film mode' in comm:
             keyboard.press('t')
 
         speak('Done Sir')
+
+
 
     while True:
         query=takecommand()
@@ -220,6 +280,7 @@ def TaskExe():
         elif "you need a break" in query:
             speak("ok sir")
             speak("you can call me anytime")
+            speak("Just say Wake Up jarvis!")
             break
 
         elif "bye" in query:
@@ -348,4 +409,72 @@ def TaskExe():
 
         elif 'dictionary' in query:
             Dict()
+
+        elif 'joke' in query:
+            get = pyjokes.get_joke()
+            speak(get)
+        
+        elif "that was pretty cringe" in query:
+            speak("really??????????????????")
+
+        elif 'alarm' in query:
+            speak("enter the time")
+            time=input(": Enter the time :")
+
+
+            while True:
+                Time_Ac=datetime.datetime.now()
+                now=Time_Ac.strftime("%H:%M:%S")
+
+
+
+                if now==time:
+                    speak("time to wake up sir")
+                    playsound('D:\\jarvis project\\newsound.mp3')
+                    speak("Alarm closed")
+
+                elif now>time:
+                    break
+        
+        elif "remember that" in query:
+            rememberMsg = query.replace("remember that","")
+            rememberMsg = query .replace("jarvis","")
+            speak("You Told me to remind you that :" +rememberMsg)
+            remember = open("data.txt","w")
+            remember.write(rememberMsg)
+            remember.close()
+
+        elif "what do you remember" in query:
+            remember = open("data.txt","r")
+            speak("You told me to remind that" +remember.read())
+
+        elif 'please search' in query:
+            import wikipedia as googleScrap
+            query = query.replace("jarvis","")
+            query = query.replace("google search","")
+            query = query.replace("google","")
+            speak("This is what i found on the web")
+
+            try:
+                # pywhatkit.search(query)
+                result = googleScrap.summary(query,2)
+                speak(result)
+
+            except:
+                speak("no speakable data available")
+
+        elif 'temperature' in query:
+            Temp()
+
+        # elif 'translator' in query:
+        #     Tran()
+
+        elif 'downloading speed' in query:
+            speedtest()    
+
+        elif 'uploading speed' in query:
+            speedtest()    
+
+        elif 'internet speed' in query:
+            speedtest()
 TaskExe()
