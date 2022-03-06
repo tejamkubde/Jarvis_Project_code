@@ -6,8 +6,10 @@ import pywhatkit
 import time
 import flask
 import os 
+import whatsapp
 import wikipedia
 import pyautogui
+from click import command
 import keyboard
 from PyDictionary import PyDictionary as diction
 import pyjokes
@@ -16,6 +18,7 @@ from playsound import playsound
 import requests
 from bs4 import BeautifulSoup
 from googletrans import Translator
+from pywikihow import WikiHow , search_wikihow
 
 
 Assistant = pyttsx3.init('sapi5')
@@ -234,6 +237,13 @@ def TaskExe():
 
         elif "whatsapp" in query:
             os.system("TASKKILL /F /im WhatsApp.exe")
+    
+    def YoutubeSearch(term):
+        result = "https://www.youtube.com/results?search_query=" + term
+        webbrowser.open(result)
+        speak("This is what i found for your search")
+        pywhatkit.playonyt(term)
+        speak("This may also help you Sir")
 
     def YoutubeAuto():
 
@@ -263,6 +273,19 @@ def TaskExe():
 
         speak('Done Sir')
 
+    def GoogleSearch(term):
+        query = term.replace("jarvis","")
+        query = query.replace("what is","")
+        query = query.replace("how to","")
+        query = query.replace("who is","")
+        query = query.replace("what do we mean by","")
+        query = query.replace("what do you mean by","")
+        query = query.replace(" ","")
+
+        Query = str(term)
+        pywhatkit.search(Query)
+        search = wikipedia.summary(Query,2)
+        speak(f":According to your search : {search}")
 
 
     while True:
@@ -289,18 +312,24 @@ def TaskExe():
             break
 
         elif "youtube search" in query:
-            speak("Ok sir, This is what i found for your search!")
+            # speak("Ok sir, This is what i found for your search!")
+            # query = query.replace("youtube search","")
+            # query = query.replace("jarvis","")
+            # web = "https://www.youtube.com/results?search_query=" + query
+            # webbrowser.open(web)
+            # speak("Done Sir")
+
             query = query.replace("youtube search","")
             query = query.replace("jarvis","")
-            web = "https://www.youtube.com/results?search_query=" + query
-            webbrowser.open(web)
-            speak("Done Sir")
+            YoutubeSearch(query)
+
             
         elif "google search" in query:
             speak("This is what i found for your search sir!")
             query = query.replace("google search","")
             query = query.replace("jarvis","")
-            pywhatkit.search(query)
+            # pywhatkit.search(query)
+            GoogleSearch(query)
             speak("Done Sir!!")
 
         elif "website" in query:
@@ -320,8 +349,8 @@ def TaskExe():
             webbrowser.open(web)
             speak("Done Sir!")
                 
-        elif "whatsapp message" in query:
-            whatsapp()
+        # elif "whatsapp message" in query:
+        #     whatsapp()
 
         elif "play song" in query:
             music()
@@ -380,8 +409,8 @@ def TaskExe():
         elif "chrome automation" in query:
             ChromeAuto()
 
-        elif 'pause' in query:
-            keyboard.press('space bar')
+        elif 'stop' in query:
+            keyboard.press('spacebar')
 
         elif 'restart' in query:
             keyboard.press('0')
@@ -415,7 +444,7 @@ def TaskExe():
             speak(get)
         
         elif "that was pretty cringe" in query:
-            speak("really??????????????????")
+            speak("reaaaalllllly??????????????????")
 
         elif 'alarm' in query:
             speak("enter the time")
@@ -477,4 +506,38 @@ def TaskExe():
 
         elif 'internet speed' in query:
             speedtest()
+
+        elif 'whatsapp message' in query:
+            query = query.replace("jarvis","")
+            query = query.replace("send","")
+            query = query.replace("whatsapp message","")
+            query = query.replace("to","")
+            name = query
+            
+            if 'laptop' in name:
+                numb = "9067084690"
+                speak(f"Whats the Message For {name}")
+                mess = takecommand()
+                whatsapp.whatsapp(numb,mess)
+            
+            elif 'pretty' in name:
+                numb = "9307665461"
+                speak(f"Whats the Message For {name}")
+                mess = takecommand()
+                whatsapp.whatsapp(numb,mess)
+
+            elif 'bag' in name:
+                numb = "8484037377"
+                speak(f"Whats the Message For {name}")
+                mess = takecommand()
+                whatsapp.whatsapp(numb,mess)
+       
+            elif 'jarvis' in name:
+                gro = "KsjFp8jhhPA9UHap9dRHcU"
+                speak(f"Whats the Message for {name} ")
+                mess = takecommand()
+                whatsapp.Whatsapp_Grp(gro,mess)
+
+
+
 TaskExe()
