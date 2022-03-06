@@ -284,9 +284,12 @@ def TaskExe():
 
         Query = str(term)
         pywhatkit.search(Query)
-        search = wikipedia.summary(Query,2)
-        speak(f":According to your search : {search}")
+        if "google search" in Query:
+            search = wikipedia.summary(Query,2)
+            speak(f":According to your search : {search}")
 
+        else:
+            pass
 
     while True:
         query=takecommand()
