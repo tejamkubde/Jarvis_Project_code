@@ -1,43 +1,13 @@
 import imports
-
-
-Assistant = imports.pyttsx3.init('sapi5')
-voices = Assistant.getProperty('voices')
-Assistant.setProperty('voices',voices[1].id)
-Assistant.setProperty("rate",170)
-
-def speak(audio):
-    print("     ")
-    Assistant.say(audio)
-
-    print(f":{audio}")
-    Assistant.runAndWait()
-    
-def takecommand():
-    command = imports.sr.Recognizer()
-    with imports.sr.Microphone() as source:
-        print("Listening.............")
-        command.pause_threshold = 1
-        audio = command.listen(source)
-       
-        try:
-            print("Recognizing............")
-            query = command.recognize_google(audio,language='en-in')
-            print(f'you said : {query}') 
-            
-        except Exception as Error:
-            return "none"
-        
-        return query.lower()
-                
-
+import cmd
+               
 def TaskExe():
-    speak("Hello, I am jarvis!")
-    speak("How can i help you? ")
+    cmd.speak("Hello, I am jarvis!")
+    cmd.speak("How can i help you? ")
 
     def speedtest():
         import speedtest
-        speak("Checking Speed")
+        cmd.speak("Checking Speed")
         speed = speedtest.Speedtest()
         downloading = speed.download()
         correctDown= int(downloading/800000)
@@ -45,25 +15,25 @@ def TaskExe():
         correctUpload=int(uploading/800000)
 
         if 'uploading' in query:
-            speak(f"The uploading speed is {correctUpload} mbps")
+            cmd.speak(f"The uploading speed is {correctUpload} mbps")
 
         elif 'downloading' in query:
-            speak(f"The downloading speed is {correctDown} mbps")
+            cmd.speak(f"The downloading speed is {correctDown} mbps")
 
 
         else:
-            speak(f"The downloading speed is {correctDown} mbp/s and uploading speed is {correctUpload} mbps")
+            cmd.speak(f"The downloading speed is {correctDown} mbp/s and uploading speed is {correctUpload} mbps")
 
     def takeHindi():
-        command = imports.sr.Recognizer()
+        cmd = imports.sr.Recognizer()
         with imports.sr.Microphone() as source:
             print("Listening.............")
-            command.pause_threshold = 1
-            audio = command.listen(source)
+            cmd.pause_threshold = 1
+            audio = cmd.listen(source)
        
         try:
             print("Recognizing............")
-            query = command.recognize_google(audio,language='en-in')
+            query = cmd.recognize_google(audio,language='en-in')
             print(f'you said : {query}') 
             
         except:
@@ -72,12 +42,12 @@ def TaskExe():
         return query.lower()
 
     def Tran():
-        speak('Tell me the Line!')
+        cmd.speak('Tell me the Line!')
         line = takeHindi()
         traslate = imports.Translator()
         result = traslate.translate(line)
         Text = result.text 
-        speak(f"The Translation Of This Line Is:",Text)
+        cmd.speak(f"The Translation Of This Line Is:",Text)
 
     def Temp():
         search="temperature in pune"
@@ -85,85 +55,85 @@ def TaskExe():
         r=imports.requests.get(url)
         data= imports.BeautifulSoup(r.text,"html.parser")
         temperature=data.find("div",class_="BNeawe").text
-        speak(f"the temperature outside is {temperature}")
+        cmd.speak(f"the temperature outside is {temperature}")
 
     def music():
-        speak("Tell me the name of the song!")
-        musicname = takecommand()
+        cmd.speak("Tell me the name of the song!")
+        musicname = cmd.takecmd()
         imports.pywhatkit.playonyt(musicname)
-        speak("Your song has been started!, Enjoy sir")
+        cmd.speak("Your song has been started!, Enjoy sir")
 
     def whatsapp():
-        speak("Tell me the name of the person")
-        name = takecommand()
+        cmd.speak("Tell me the name of the person")
+        name = cmd.takecmd()
 
 
         if 'abc' in name:
-            speak("Tell me the message")
-            msg=takecommand()
-            speak("tell me the time sir")
-            speak("time in hour")
-            hour=int(takecommand())
-            speak("time in minutes")
-            min=int(takecommand())
+            cmd.speak("Tell me the message")
+            msg=cmd.takecmd()
+            cmd.speak("tell me the time sir")
+            cmd.speak("time in hour")
+            hour=int(cmd.takecmd())
+            cmd.speak("time in minutes")
+            min=int(cmd.takecmd())
             imports.pywhatkit.sendwhatmsg("+919307665461",msg,hour,min,20)
-            speak("ok sir, sending whatsapp message")
+            cmd.speak("ok sir, sending whatsapp message")
 
         elif 'about' in name:
-            speak("Tell me the message")
-            msg=takecommand()
-            speak("tell me the time sir")
-            speak("time in hour")
-            hour=int(takecommand())
-            speak("time in minutes")
-            min=int(takecommand())
+            cmd.speak("Tell me the message")
+            msg=cmd.takecmd()
+            cmd.speak("tell me the time sir")
+            cmd.speak("time in hour")
+            hour=int(cmd.takecmd())
+            cmd.speak("time in minutes")
+            min=int(cmd.takecmd())
             imports.pywhatkit.sendwhatmsg("+919730863521",msg,hour,min,20)
-            speak("ok sir, sending whatsapp message")
+            cmd.speak("ok sir, sending whatsapp message")
     
         else:
-            speak("tell me the phone number")
-            phone=int(takecommand())
+            cmd.speak("tell me the phone number")
+            phone=int(cmd.takecmd())
             ph = "+91" + phone
-            speak("Tell me the message")
-            msg=takecommand()
-            speak("tell me the time sir")
-            speak("time in hour")
-            hour=int(takecommand())
-            speak("time in minutes")
-            min=int(takecommand())
+            cmd.speak("Tell me the message")
+            msg=cmd.takecmd()
+            cmd.speak("tell me the time sir")
+            cmd.speak("time in hour")
+            hour=int(cmd.takecmd())
+            cmd.speak("time in minutes")
+            min=int(cmd.takecmd())
             imports.pywhatkit.sendwhatmsg(ph,msg,hour,min,20)
-            speak("ok sir, sending whatsapp message")
+            cmd.speak("ok sir, sending whatsapp message")
     
     def ChromeAuto():
-        speak('Chrome Automation Started!!')
-        command = takecommand()
+        cmd.speak('Chrome Automation Started!!')
+        cmd = cmd.takecmd()
 
-        if 'close this tab' in command:
+        if 'close this tab' in cmd:
             imports.keyboard.press_and_release('ctrl + w')
 
-        elif 'open new tab' in command:
+        elif 'open new tab' in cmd:
             imports.keyboard.press_and_release('ctrl + t')
 
-        elif 'open new window' in command:
+        elif 'open new window' in cmd:
             imports.keyboard.press_and_release('ctrl + n')
 
-        elif 'history' in command:
+        elif 'history' in cmd:
             imports.keyboard.press_and_release('ctrl + h')
 
     def screenshot():
-        speak("Ok sir! What should i name that file? ")
-        path = takecommand()
+        cmd.speak("Ok sir! What should i name that file? ")
+        path = cmd.takecmd()
         path1name  = path + ".png"
         path1 = "C:\\Users\\Ketan\\OneDrive\\Pictures\\Screenshots\\" +path1name
         kk = imports.pyautogui.screenshot()
         kk.save(path1)
         imports.os.startfile("C:\\Users\\Ketan\\OneDrive\\Pictures\\Screenshots")
-        speak("Here is your screenshot")
+        cmd.speak("Here is your screenshot")
  
     def Dict():
-        speak('Dictionary Activated !!')
-        speak('Tell me the Word Sir...!')
-        prob1 = takecommand()
+        cmd.speak('Dictionary Activated !!')
+        cmd.speak('Tell me the Word Sir...!')
+        prob1 = cmd.takecmd()
 
         if 'meaning' in prob1:
             # probl = probl.replace("what is the","")
@@ -171,13 +141,13 @@ def TaskExe():
             # probl = probl.replace("of","")
             probl = probl.replace("meaning of","")
             result = imports.diction.meaning(probl)
-            speak(f'The Meaning For {probl} is {result}')
+            cmd.speak(f'The Meaning For {probl} is {result}')
         
         else:
-            speak("tejam")
+            cmd.speak("tejam")
 
     def openApps():
-        speak("Ok sir, Wait a second!")
+        cmd.speak("Ok sir, Wait a second!")
 
         if "code" in query:
             imports.os.startfile("C:\\Users\\Ketan\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
@@ -204,7 +174,7 @@ def TaskExe():
             imports.webbrowser.open("https://www.google.com/maps/@18.6793851,73.8536679,15z")
 
     def closeApps():
-        speak("Ok sir!, Wait a second..")
+        cmd.speak("Ok sir!, Wait a second..")
 
         if "chrome" in query:
             imports.os.system("TASKKILL /F /im chrome.exe")
@@ -221,14 +191,14 @@ def TaskExe():
     def YoutubeSearch(term):
         result = "https://www.youtube.com/results?search_query=" + term
         imports.webbrowser.open(result)
-        speak("This is what i found for your search")
+        cmd.speak("This is what i found for your search")
         imports.pywhatkit.playonyt(term)
-        speak("This may also help you Sir")
+        cmd.speak("This may also help you Sir")
 
     def YoutubeAuto():
 
-        speak("Whats your Command ?")
-        comm = takecommand()
+        cmd.speak("Whats your Cmd ?")
+        comm = cmd.takecmd()
         
         if 'pause' in comm:
             imports.keyboard.press('space bar')
@@ -251,7 +221,7 @@ def TaskExe():
         elif 'film mode' in comm:
             imports.keyboard.press('t')
 
-        speak('Done Sir')
+        cmd.speak('Done Sir')
 
     def GoogleSearch(term):
         query = term.replace("jarvis","")
@@ -266,71 +236,64 @@ def TaskExe():
         imports.pywhatkit.search(Query)
         if "google search" in Query:
             search = imports.wikipedia.summary(Query,2)
-            speak(f":According to your search : {search}")
+            cmd.speak(f":According to your search : {search}")
 
         else:
             pass
 
     while True:
-        query=takecommand()
+        query=cmd.takecmd()
 
         if "hello" in query:
-            speak("hello sir i am jarvis")
-            speak("your personal assistant")
-            speak("How may i help you?")
+            cmd.speak("hello sir i am jarvis")
+            cmd.speak("your personal assistant")
+            cmd.speak("How may i help you?")
 
         elif "how are you" in query:
-            speak("I am fine sir")
-            speak("what about you")
+            cmd.speak("I am fine sir")
+            cmd.speak("what about you")
 
         elif "you need a break" in query:
-            speak("ok sir")
-            speak("you can call me anytime")
-            speak("Just say Wake Up jarvis!")
+            cmd.speak("ok sir")
+            cmd.speak("you can call me anytime")
+            cmd.speak("Just say Wake Up jarvis!")
             break
 
         elif "bye" in query:
-            speak("bye sir")
-            speak("have a good day")
+            cmd.speak("bye sir")
+            cmd.speak("have a good day")
             break
 
         elif "youtube search" in query:
-            # speak("Ok sir, This is what i found for your search!")
-            # query = query.replace("youtube search","")
-            # query = query.replace("jarvis","")
-            # web = "https://www.youtube.com/results?search_query=" + query
-            # webbrowser.open(web)
-            # speak("Done Sir")
-
             query = query.replace("youtube search","")
             query = query.replace("jarvis","")
             YoutubeSearch(query)
 
             
         elif "google search" in query:
-            speak("This is what i found for your search sir!")
+            cmd.speak("This is what i found for your search sir!")
             query = query.replace("google search","")
             query = query.replace("jarvis","")
             # pywhatkit.search(query)
             GoogleSearch(query)
-            speak("Done Sir!!")
+            cmd.speak("Done Sir!!")
 
         elif "website" in query:
-            speak("Ok sir, Launching")
+            cmd.speak("Ok sir, Launching")
             query = query.replace("website","")
             query = query.replace("jarvis","")
             query = query.replace(" ","")
             web1 = query.replace("open","")
             web2 = "https://www." + web1 + ".com"
             imports.webbrowser.open(web2)
-            speak("launched sir!")
+            cmd.speak("launched sir!")
 
         elif "launch" in query:
-            speak("Tell me the name of the website!")
-            name = takecommand()
+            cmd.speak("Tell me the name of the website!")
+            name = cmd.takecmd()
             web = 'https://www.' + name + '.com'
             imports.webbrowser.open(web)
-            speak("Done Sir!")
+            cmd.speak("Done Sir!")
                 
         # elif "whatsapp message" in query:
         #     whatsapp()
@@ -339,11 +302,11 @@ def TaskExe():
             music()
 
         elif "wikipedia" in query:
-            speak("Searching wikipedia")
+            cmd.speak("Searching wikipedia")
             query=query.replace("jarvis","")
             query=query.replace("wikipedia","")
             wiki= imports.wikipedia.summary(query,2)
-            speak(f"According to Wikipedia :{wiki}")
+            cmd.speak(f"According to Wikipedia :{wiki}")
 
         elif "screenshot" in query:
             screenshot()
@@ -373,9 +336,9 @@ def TaskExe():
             openApps()
 
         elif "repeat my words" in query:
-            speak("speak sir")
-            ab= takecommand()
-            speak(f"you said : {ab}")
+            cmd.speak("speak sir")
+            ab= cmd.takecmd()
+            cmd.speak(f"you said : {ab}")
 
         elif "close chrome" in query:
             closeApps()
@@ -424,13 +387,13 @@ def TaskExe():
 
         elif 'joke' in query:
             get = imports.pyjokes.get_joke()
-            speak(get)
+            cmd.speak(get)
         
         elif "that was pretty cringe" in query:
-            speak("reaaaalllllly??????????????????")
+            cmd.speak("reaaaalllllly??????????????????")
 
         elif 'alarm' in query:
-            speak("enter the time")
+            cmd.speak("enter the time")
             time=input(": Enter the time :")
 
 
@@ -441,9 +404,9 @@ def TaskExe():
 
 
                 if now==time:
-                    speak("time to wake up sir")
+                    cmd.speak("time to wake up sir")
                     imports.playsound('D:\\jarvis project\\newsound.mp3')
-                    speak("Alarm closed")
+                    cmd.speak("Alarm closed")
 
                 elif now>time:
                     break
@@ -451,29 +414,29 @@ def TaskExe():
         elif "remember that" in query:
             rememberMsg = query.replace("remember that","")
             rememberMsg = query .replace("jarvis","")
-            speak("You Told me to remind you that :" +rememberMsg)
+            cmd.speak("You Told me to remind you that :" +rememberMsg)
             remember = open("data.txt","w")
             remember.write(rememberMsg)
             remember.close()
 
         elif "what do you remember" in query:
             remember = open("data.txt","r")
-            speak("You told me to remind that" +remember.read())
+            cmd.speak("You told me to remind that" +remember.read())
 
         elif 'please search' in query:
             import wikipedia as googleScrap
             query = query.replace("jarvis","")
             query = query.replace("google search","")
             query = query.replace("google","")
-            speak("This is what i found on the web")
+            cmd.speak("This is what i found on the web")
 
             try:
                 # pywhatkit.search(query)
                 result = googleScrap.summary(query,2)
-                speak(result)
+                cmd.speak(result)
 
             except:
-                speak("no speakable data available")
+                cmd.speak("no speakable data available")
 
         elif 'temperature' in query:
             Temp()
@@ -499,26 +462,26 @@ def TaskExe():
             
             if 'laptop' in name:
                 numb = "9067084690"
-                speak(f"Whats the Message For {name}")
-                mess = takecommand()
+                cmd.speak(f"Whats the Message For {name}")
+                mess = cmd.takecmd()
                 whatsapp.whatsapp(numb,mess)
             
             elif 'pretty' in name:
                 numb = "9307665461"
-                speak(f"Whats the Message For {name}")
-                mess = takecommand()
+                cmd.speak(f"Whats the Message For {name}")
+                mess = cmd.takecmd()
                 whatsapp.whatsapp(numb,mess)
 
             elif 'bag' in name:
                 numb = "8484037377"
-                speak(f"Whats the Message For {name}")
-                mess = takecommand()
+                cmd.speak(f"Whats the Message For {name}")
+                mess = cmd.takecmd()
                 whatsapp.whatsapp(numb,mess)
        
             elif 'jarvis' in name:
                 gro = "KsjFp8jhhPA9UHap9dRHcU"
-                speak(f"Whats the Message for {name} ")
-                mess = takecommand()
+                cmd.speak(f"Whats the Message for {name} ")
+                mess = cmd.takecmd()
                 whatsapp.Whatsapp_Grp(gro,mess)
 
 
