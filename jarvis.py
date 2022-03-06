@@ -1,27 +1,7 @@
-import queue
-import pyttsx3
-import webbrowser
-import speech_recognition as sr
-import pywhatkit
-import time
-import flask
-import os 
-import whatsapp
-import wikipedia
-import pyautogui
-from click import command
-import keyboard
-from PyDictionary import PyDictionary as diction
-import pyjokes
-import datetime
-from playsound import playsound
-import requests
-from bs4 import BeautifulSoup
-from googletrans import Translator
-from pywikihow import WikiHow , search_wikihow
+import imports
 
 
-Assistant = pyttsx3.init('sapi5')
+Assistant = imports.pyttsx3.init('sapi5')
 voices = Assistant.getProperty('voices')
 Assistant.setProperty('voices',voices[1].id)
 Assistant.setProperty("rate",170)
@@ -34,8 +14,8 @@ def speak(audio):
     Assistant.runAndWait()
     
 def takecommand():
-    command = sr.Recognizer()
-    with sr.Microphone() as source:
+    command = imports.sr.Recognizer()
+    with imports.sr.Microphone() as source:
         print("Listening.............")
         command.pause_threshold = 1
         audio = command.listen(source)
@@ -75,8 +55,8 @@ def TaskExe():
             speak(f"The downloading speed is {correctDown} mbp/s and uploading speed is {correctUpload} mbps")
 
     def takeHindi():
-        command = sr.Recognizer()
-        with sr.Microphone() as source:
+        command = imports.sr.Recognizer()
+        with imports.sr.Microphone() as source:
             print("Listening.............")
             command.pause_threshold = 1
             audio = command.listen(source)
@@ -94,7 +74,7 @@ def TaskExe():
     def Tran():
         speak('Tell me the Line!')
         line = takeHindi()
-        traslate = Translator()
+        traslate = imports.Translator()
         result = traslate.translate(line)
         Text = result.text 
         speak(f"The Translation Of This Line Is:",Text)
@@ -102,15 +82,15 @@ def TaskExe():
     def Temp():
         search="temperature in pune"
         url = f"https://www.google.com/search?q={search}"
-        r=requests.get(url)
-        data= BeautifulSoup(r.text,"html.parser")
+        r=imports.requests.get(url)
+        data= imports.BeautifulSoup(r.text,"html.parser")
         temperature=data.find("div",class_="BNeawe").text
         speak(f"the temperature outside is {temperature}")
 
     def music():
         speak("Tell me the name of the song!")
         musicname = takecommand()
-        pywhatkit.playonyt(musicname)
+        imports.pywhatkit.playonyt(musicname)
         speak("Your song has been started!, Enjoy sir")
 
     def whatsapp():
@@ -126,7 +106,7 @@ def TaskExe():
             hour=int(takecommand())
             speak("time in minutes")
             min=int(takecommand())
-            pywhatkit.sendwhatmsg("+919307665461",msg,hour,min,20)
+            imports.pywhatkit.sendwhatmsg("+919307665461",msg,hour,min,20)
             speak("ok sir, sending whatsapp message")
 
         elif 'about' in name:
@@ -137,7 +117,7 @@ def TaskExe():
             hour=int(takecommand())
             speak("time in minutes")
             min=int(takecommand())
-            pywhatkit.sendwhatmsg("+919730863521",msg,hour,min,20)
+            imports.pywhatkit.sendwhatmsg("+919730863521",msg,hour,min,20)
             speak("ok sir, sending whatsapp message")
     
         else:
@@ -151,7 +131,7 @@ def TaskExe():
             hour=int(takecommand())
             speak("time in minutes")
             min=int(takecommand())
-            pywhatkit.sendwhatmsg(ph,msg,hour,min,20)
+            imports.pywhatkit.sendwhatmsg(ph,msg,hour,min,20)
             speak("ok sir, sending whatsapp message")
     
     def ChromeAuto():
@@ -159,25 +139,25 @@ def TaskExe():
         command = takecommand()
 
         if 'close this tab' in command:
-            keyboard.press_and_release('ctrl + w')
+            imports.keyboard.press_and_release('ctrl + w')
 
         elif 'open new tab' in command:
-            keyboard.press_and_release('ctrl + t')
+            imports.keyboard.press_and_release('ctrl + t')
 
         elif 'open new window' in command:
-            keyboard.press_and_release('ctrl + n')
+            imports.keyboard.press_and_release('ctrl + n')
 
         elif 'history' in command:
-            keyboard.press_and_release('ctrl + h')
+            imports.keyboard.press_and_release('ctrl + h')
 
     def screenshot():
         speak("Ok sir! What should i name that file? ")
         path = takecommand()
         path1name  = path + ".png"
         path1 = "C:\\Users\\Ketan\\OneDrive\\Pictures\\Screenshots\\" +path1name
-        kk = pyautogui.screenshot()
+        kk = imports.pyautogui.screenshot()
         kk.save(path1)
-        os.startfile("C:\\Users\\Ketan\\OneDrive\\Pictures\\Screenshots")
+        imports.os.startfile("C:\\Users\\Ketan\\OneDrive\\Pictures\\Screenshots")
         speak("Here is your screenshot")
  
     def Dict():
@@ -190,7 +170,7 @@ def TaskExe():
             # probl = probl.replace("jarvis","")
             # probl = probl.replace("of","")
             probl = probl.replace("meaning of","")
-            result = diction.meaning(probl)
+            result = imports.diction.meaning(probl)
             speak(f'The Meaning For {probl} is {result}')
         
         else:
@@ -200,49 +180,49 @@ def TaskExe():
         speak("Ok sir, Wait a second!")
 
         if "code" in query:
-            os.startfile("C:\\Users\\Ketan\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
+            imports.os.startfile("C:\\Users\\Ketan\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
 
         elif "brave" in query:
-            os.startfile("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe")
+            imports.os.startfile("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe")
 
         elif "whatsapp" in query:
-            os.startfile("C:\\Users\\Ketan\\AppData\\Local\\WhatsApp\\WhatsApp.exe")
+            imports.os.startfile("C:\\Users\\Ketan\\AppData\\Local\\WhatsApp\\WhatsApp.exe")
         
         elif "chrome" in query:
-            os.startfile("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe")
+            imports.os.startfile("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe")
 
         elif "facebook" in query:
-            webbrowser.open("https://www.facebook.com/")
+            imports.webbrowser.open("https://www.facebook.com/")
             
         elif "youtube" in query:
-            webbrowser.open("https://www.youtube.com/")
+            imports.webbrowser.open("https://www.youtube.com/")
 
         elif "instagram" in query:
-            webbrowser.open("https://www.instagram.com/")
+            imports.webbrowser.open("https://www.instagram.com/")
 
         elif "maps" in query:
-            webbrowser.open("https://www.google.com/maps/@18.6793851,73.8536679,15z")
+            imports.webbrowser.open("https://www.google.com/maps/@18.6793851,73.8536679,15z")
 
     def closeApps():
         speak("Ok sir!, Wait a second..")
 
         if "chrome" in query:
-            os.system("TASKKILL /F /im chrome.exe")
+            imports.os.system("TASKKILL /F /im chrome.exe")
 
         elif "brave" in query:
-            os.system("TASKKILL /F /im brave.exe")
+            imports.os.system("TASKKILL /F /im brave.exe")
 
         elif "code" in query:
-            os.system("TASKKILL /F /im Code.exe")
+            imports.os.system("TASKKILL /F /im Code.exe")
 
         elif "whatsapp" in query:
-            os.system("TASKKILL /F /im WhatsApp.exe")
+            imports.os.system("TASKKILL /F /im WhatsApp.exe")
     
     def YoutubeSearch(term):
         result = "https://www.youtube.com/results?search_query=" + term
-        webbrowser.open(result)
+        imports.webbrowser.open(result)
         speak("This is what i found for your search")
-        pywhatkit.playonyt(term)
+        imports.pywhatkit.playonyt(term)
         speak("This may also help you Sir")
 
     def YoutubeAuto():
@@ -251,25 +231,25 @@ def TaskExe():
         comm = takecommand()
         
         if 'pause' in comm:
-            keyboard.press('space bar')
+            imports.keyboard.press('space bar')
 
         elif 'restart' in comm:
-            keyboard.press('0')
+            imports.keyboard.press('0')
 
         elif 'mute' in comm:
-            keyboard.press('m')
+            imports.keyboard.press('m')
 
         elif 'skip' in comm:
-            keyboard.press('l')
+            imports.keyboard.press('l')
 
         elif 'back' in comm:
-            keyboard.press('j')
+            imports.keyboard.press('j')
 
         elif 'full screen' in comm:
-            keyboard.press('f')
+            imports.keyboard.press('f')
 
         elif 'film mode' in comm:
-            keyboard.press('t')
+            imports.keyboard.press('t')
 
         speak('Done Sir')
 
@@ -283,9 +263,9 @@ def TaskExe():
         query = query.replace(" ","")
 
         Query = str(term)
-        pywhatkit.search(Query)
+        imports.pywhatkit.search(Query)
         if "google search" in Query:
-            search = wikipedia.summary(Query,2)
+            search = imports.wikipedia.summary(Query,2)
             speak(f":According to your search : {search}")
 
         else:
@@ -342,14 +322,14 @@ def TaskExe():
             query = query.replace(" ","")
             web1 = query.replace("open","")
             web2 = "https://www." + web1 + ".com"
-            webbrowser.open(web2)
+            imports.webbrowser.open(web2)
             speak("launched sir!")
 
         elif "launch" in query:
             speak("Tell me the name of the website!")
             name = takecommand()
             web = 'https://www.' + name + '.com'
-            webbrowser.open(web)
+            imports.webbrowser.open(web)
             speak("Done Sir!")
                 
         # elif "whatsapp message" in query:
@@ -362,7 +342,7 @@ def TaskExe():
             speak("Searching wikipedia")
             query=query.replace("jarvis","")
             query=query.replace("wikipedia","")
-            wiki=wikipedia.summary(query,2)
+            wiki= imports.wikipedia.summary(query,2)
             speak(f"According to Wikipedia :{wiki}")
 
         elif "screenshot" in query:
@@ -413,28 +393,28 @@ def TaskExe():
             ChromeAuto()
 
         elif 'stop' in query:
-            keyboard.press('spacebar')
+            imports.keyboard.press('spacebar')
 
         elif 'restart' in query:
-            keyboard.press('0')
+            imports.keyboard.press('0')
 
         elif 'mute' in query:
-            keyboard.press('m')
+            imports.keyboard.press('m')
 
         elif 'skip' in query:
-            keyboard.press('l')
+            imports.keyboard.press('l')
 
         elif 'back' in query:
-            keyboard.press('j')
+            imports.keyboard.press('j')
 
         elif 'full screen' in query:
-            keyboard.press('f')
+            imports.keyboard.press('f')
 
         elif 'film mode' in query:
-            keyboard.press('t')
+            imports.keyboard.press('t')
 
         elif 'pause' in query:
-            keyboard.press('k')
+            imports.keyboard.press('k')
 
         elif 'youtube tool' in query:
             YoutubeAuto()
@@ -443,7 +423,7 @@ def TaskExe():
             Dict()
 
         elif 'joke' in query:
-            get = pyjokes.get_joke()
+            get = imports.pyjokes.get_joke()
             speak(get)
         
         elif "that was pretty cringe" in query:
@@ -455,14 +435,14 @@ def TaskExe():
 
 
             while True:
-                Time_Ac=datetime.datetime.now()
+                Time_Ac= imports.datetime.datetime.now()
                 now=Time_Ac.strftime("%H:%M:%S")
 
 
 
                 if now==time:
                     speak("time to wake up sir")
-                    playsound('D:\\jarvis project\\newsound.mp3')
+                    imports.playsound('D:\\jarvis project\\newsound.mp3')
                     speak("Alarm closed")
 
                 elif now>time:
